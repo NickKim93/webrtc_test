@@ -14,7 +14,7 @@ export default function UserHome() {
 
   const onIncoming = (p: CallPayload) => setIncoming(p);
   const onStarted = (p: CallPayload) => {
-    const callId = p.id;
+    const callId = p.callId;
     const peerId = meId === p.callerId ? p.translatorId : p.callerId;
     const role: 'caller' | 'callee' = meId === p.callerId ? 'caller' : 'callee';
     setIncoming(null);

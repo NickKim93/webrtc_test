@@ -16,16 +16,16 @@ Make sure your backend exposes matching endpoints and relays STOMP messages to t
 
 ## Configuration
 - Environment variables are read via `import.meta.env`:
-  - `VITE_API_URL` - base URL for REST calls (defaults to `/api`).
+  - `VITE_API_URL` - base URL for REST calls.
   - `VITE_WS_PATH` - SockJS endpoint (defaults to `/ws`).
 - Create a `.env.local` file if you need to override the defaults, for example:
 
 ```
-VITE_API_URL=http://localhost:8080/api
+VITE_API_URL=http://localhost:8080/
 VITE_WS_PATH=http://localhost:8080/ws
 ```
 
-- The dev server proxy in `vite.config.js` forwards `/api` and `/ws` to `http://localhost:8080` by default. Update the `target` values there when you want to point at a different backend while keeping relative URLs in the code.
+- The dev server proxy in `vite.config.js`. Update the `target` values there when you want to point at a different backend while keeping relative URLs in the code.
 
 ## Getting started
 1. Install dependencies: `npm install`.

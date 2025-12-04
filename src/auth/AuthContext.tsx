@@ -9,8 +9,8 @@ export type AuthState = {
 };
 
 export type AuthContextValue = AuthState & {
-  loginWithToken: (token: string) => void;
-  loginWithCredentials: (login: string, password: string) => Promise<void>;
+  loginWithToken: (token: string) => AuthState;
+  loginWithCredentials: (phone: string, password: string) => Promise<AuthState>;
   logout: () => void;
 };
 
@@ -44,21 +44,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const meId = extractUserId(payload);
     const roles = extractRoles(payload);
     if (meId == null) throw new Error('JWT must contain numeric id (claims.id or numeric sub)');
-    persist({ token, meId, roles });
+    const next = { token, meId, roles };
+    persist(next);
+    return next;
   }, []);
 
   const loginWithCredentials = useCallback(
-    async (login: string, password: string) => {
+    async (phone: string, password: string) => {
       const base = import.meta.env.VITE_API_URL || '/api';
       const res = await fetch(`${base}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ login, password }),
+        body: JSON.stringify({ phone, password }),
       });
       if (!res.ok) throw new Error('Login failed');
       const data = await res.json();
       if (!data.token) throw new Error('No token in response');
-      loginWithToken(data.token);
+      return loginWithToken(data.token);
     },
     [loginWithToken],
   );

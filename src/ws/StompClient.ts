@@ -5,7 +5,7 @@ export function createStompClient(token: string): Client {
   const wsPath = import.meta.env.VITE_WS_PATH || "/ws";
   const client = new Client({
     reconnectDelay: 3000,
-    webSocketFactory: () => new SockJS(wsPath),
+    webSocketFactory: () => new SockJS(`${wsPath}?token=${encodeURIComponent(`Bearer ${token}`)}`),
     connectHeaders: {
       Authorization: `Bearer ${token}`,
     },

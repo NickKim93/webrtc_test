@@ -16,11 +16,11 @@ export function IncomingCallModal({
     <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.35)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <div style={{ background: 'white', borderRadius: 12, padding: 24, width: 360, boxShadow: '0 10px 30px rgba(0,0,0,0.2)' }}>
         <h3>Входящий звонок</h3>
-        <p>callId: {call.id}</p>
+        <p>callId: {call.callId}</p>
         <p>От пользователя: {call.callerId}</p>
         <div style={{ display: 'flex', gap: 12, marginTop: 16 }}>
-          <button onClick={() => onAccept(call.id)}>Принять</button>
-          <button onClick={() => onReject(call.id)}>Отклонить</button>
+          <button onClick={() => onAccept(call.callId)}>Принять</button>
+          <button onClick={() => onReject(call.callId)}>Отклонить</button>
         </div>
       </div>
     </div>

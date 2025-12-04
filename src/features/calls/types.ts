@@ -1,7 +1,7 @@
 // src/features/calls/types.ts
 
 export type CallPayload = {
-  id: number;          // call id из CallPayload.build(call)
+  callId: number;          // call id из CallPayload.build(call)
   callerId: number;    // инициатор
   translatorId: number; // получатель (переводчик)
   status?: string;

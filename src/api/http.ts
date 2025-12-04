@@ -9,7 +9,7 @@ export async function createCall({
   themeId: number;
 }) {
   const base = import.meta.env.VITE_API_URL || '/api';
-  const res = await fetch(`${base}/calls`, {
+  const res = await fetch(`${base}/call/create`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

@@ -7,22 +7,22 @@ export default function LoginPage() {
   const { loginWithCredentials, loginWithToken, roles } = useAuth();
   const nav = useNavigate();
 
-  const [login, setLogin] = useState('');
+  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [rawToken, setRawToken] = useState('');
   const [mode, setMode] = useState<'creds' | 'token'>('creds');
   const [err, setErr] = useState<string | null>(null);
 
-  const goHome = () => {
-    if (roles.includes('ROLE_TRANSLATOR')) nav('/translator');
+  const goHome = (nextRoles: string[]) => {
+    if (nextRoles.includes('ROLE_TRANSLATOR')) nav('/translator');
     else nav('/user');
   };
 
   const submitCreds = async () => {
     setErr(null);
     try {
-      await loginWithCredentials(login, password);
-      goHome();
+      const next = await loginWithCredentials(phone, password);
+      goHome(next.roles);
     } catch (e: any) {
       setErr(e.message || 'Login failed');
     }
@@ -31,8 +31,8 @@ export default function LoginPage() {
   const submitToken = () => {
     setErr(null);
     try {
-      loginWithToken(rawToken.trim());
-      goHome();
+      const next = loginWithToken(rawToken.trim());
+      goHome(next.roles || roles);
     } catch (e: any) {
       setErr(e.message || 'Bad token');
     }
@@ -50,9 +50,9 @@ export default function LoginPage() {
       {mode === 'creds' ? (
         <>
           <input
-            placeholder="login"
-            value={login}
-            onChange={(e) => setLogin(e.target.value)}
+            placeholder="phone"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
             style={{ width: '100%', marginBottom: 8 }}
           />
           <input
